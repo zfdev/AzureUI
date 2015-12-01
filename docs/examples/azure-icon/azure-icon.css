@@ -1,0 +1,121 @@
+.azure-icon{
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+.azure-icon h1{
+	position: relative;
+	font-weight: normal;
+	color: #333;
+	border-bottom: 1px dashed #CCCCCC;
+	line-height: 60px;
+}
+
+.azure-icon h2{
+	font-weight: normal;
+	color: #333;	
+	font-size: 24px;
+	line-height: 45px;
+	text-indent: 15px;
+	border-left: 5px solid #00A3D9;
+	background-color: #EFEFEF;
+}
+
+.azure-icon .description{
+	font-size: 18px;
+	padding-left: 15px;
+	padding-right: 15px;
+	color: #555555;	
+	margin-top: 5px;
+	line-height: 28px;	
+}
+
+.azure-icon .update-time{
+	position: absolute;
+	color: #CCC;
+	font-size: 14px;
+	top: 15px;
+	right: 10px;
+}
+.azure-icon .code-example{
+	padding-bottom: 25px;
+}
+.azure-icon .code-example .example-title{
+	margin-bottom: 5px;
+	margin-top: 5px;
+	font-size: 20px;
+	font-weight: normal;
+}
+.azure-icon .code-example .example-content{
+	font-size: 14px;
+	color: #333;
+	margin-top: 0;
+	padding-left: 15px;
+}
+.azure-icon .code-example .example-content a{
+	color: #00A3D9;
+}
+.azure-icon .code-example .code-content{
+	padding: 10px;
+	color: #333;
+	display: block;
+	width: 100%;
+}
+
+.azure-icon .code-example .code-demo{
+	overflow: hidden;
+	padding: 10px;	
+	background-color: #efefef;
+	margin-bottom: 5px;
+}
+
+.azure-icon .code-example .code-demo .icon{
+	display: block;
+	float: left;
+	font-size: 32px;
+	margin-right: 10px;
+	height: 32px;
+	line-height: 32px;	
+}
+
+.azure-icon .code-example .code-demo span{
+	display: block;
+	float: left;
+	font-size: 20px;
+	height: 32px;
+	line-height: 30px;
+}
+
+.azure-icon	.demo-element{
+	color: #333;
+	margin-bottom: 20px;
+	background-color: #efefef;
+	padding: 10px;
+	overflow: hidden;
+	transition: color .2s ease-in-out, background-color .2s ease-in-out;
+}
+
+.azure-icon	.demo-element:hover{
+	cursor: pointer;
+	color: #FFF;
+	background-color: #00a3d9;
+}
+
+.azure-icon	.demo-element .icon {
+	display: block;
+	float: left;
+	font-size: 32px;
+	margin-right: 10px;
+	height: 32px;
+	line-height: 32px;		
+}
+
+.azure-icon	.demo-element span {
+	display: block;
+	float: left;
+	font-size: 20px;
+	height: 32px;
+	line-height: 30px;
+}
