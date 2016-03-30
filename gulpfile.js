@@ -9,6 +9,7 @@ var del = require('del');
 //var LineByLineReader = require('line-by-line');
 var readline = require('linebyline');
 var file = require('gulp-file');
+var jsdoc = require('gulp-jsdoc');
 
 //Gulp config
 var config = {
@@ -73,8 +74,8 @@ gulp.task('updateWebfontLess', ['updateVariablesLessCode'], function() {
 	var readIcomoonLess = readline(config.webfont.icomoon.directory + config.webfont.icomoon.styleLessFile);
 	var lessString = "";
 	readIcomoonLess.on('line', function(line, lineCount) {
-		if (lineCount >= 28) {
-			lessString = lessString + line + '\r\n';
+		if (lineCount >= config.webfont.icomoon.startLine) {
+			lessString = lessString + line + '\n';
 		}
 	}).on('end', function() {
 		return file(config.webfont.azure.classnameLessFile, lessString, {
@@ -99,4 +100,22 @@ gulp.task('compressAllToZipFile', ['minifyJs', 'minifyCSS', 'copyWebfonts', 'upd
 		.pipe(gulp.dest('./download'));
 });
 
-gulp.task('default', ['compressAllToZipFile']);
+var tpl = {
+    path            : "ink-docstrap",
+    systemName      : "Azure UI",
+    footer          : "Azure UI API Document",
+    copyright       : 'Author: <a href="mailto:v-zhlong@microsoft.com">Jason Zhang</a>',
+    navType         : "vertical",
+    theme           : "cerulean",
+    dateFormat 		: "YYYY-MM-DD HH:mm:ss",
+    linenums        : true,
+    collapseSymbols : false,
+    inverseNav      : false
+  }
+//Generate API document
+gulp.task('generateAPIDocument', ['compressAllToZipFile'], function(){
+	gulp.src("./dist/js/*.js")
+  		.pipe(jsdoc('./docs/documentation-output', tpl))
+});
+
+gulp.task('default', ['generateAPIDocument']);

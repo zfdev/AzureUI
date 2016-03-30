@@ -1,10 +1,32 @@
+/*! Azure UI v0.0.1*/
 ;
 (function(win) {
 	"use strict";
 	win.AUI = win.AUI || {};
 	AUI.VERSION = "0.0.1";
 	AUI.Class = function() {
-		
+		var _mix = function(r, s){
+			for(var p in s){
+				if(s.hasOwnProperty(p)){
+					r[p] = s[p]
+				}
+			}
+		}
+		var _extend = function(){
+			var prototype = new this();
+			var SubClass = function(){
+				this.init.apply(this, arguments);
+			}
+			SubClass.prototype = prototype;
+			SubClass.prototype.constructor = SubClass;
+			return SubClass;
+		}
+		var Class = new Function();
+		Class.extend = _extend;
+		return Class;
+	}
+	AUI.base = function(){
+						
 	}
 	AUI.Template = (function() {
 		var cache = {};
@@ -39,15 +61,58 @@
 		return tmpl;
 	})();
 
-	//实现类的继承 
-	//自动初始化
-	//观察者模式
-	//单向绑定
 })(window);
 ;
 (function(win) {
 	"use strict";
 	var AUI = win.AUI;
+	var log;
+	//Debug Tools
+	AUI.debug = AUI.debug || {};
+	/**
+	 * @exports AUI/debug
+	 * @example
+	 * AUI.debug.log();
+	 * @param sTitle {String} Print debug Title
+	 * @param sMsg {String} Print debug information
+	 * @returns undefined
+	 */
+	AUI.debug.log = function(sTitle, sMsg) {
+		if (win.console) {
+			if (!arguments.length) {
+				console.log(AUI.VERSION);
+				return;
+			}
+			var sMsg;
+			var sTitle;
+			if (arguments.length == 1) {
+				sTitle = "";
+				sMsg = arguments[0];
+			}
+			if (arguments.length == 2) {
+				sTitle = "[" + arguments[0] + "]";
+				sMsg = arguments[1];
+			}
+			var oConfig = {
+				timestampStyle: "color: #09a1d3",
+				titleStyle: "color: #e66102",
+				msgStyle: "color: #3e4c59"
+			}
+			var sTimestamp = AUI.time.now();
+			var sLogInfo;
+			if (typeof sMsg == "object") {
+				var sLogInfoTimeStamp;
+				sLogInfoTimeStamp = "%c[" + sTimestamp + "]%c";
+				console.log(sLogInfoTimeStamp + sTitle + "\u2193", oConfig.timestampStyle, oConfig.titleStyle);
+				console.dir(sMsg);
+				return;
+			}
+			sLogInfo = "%c[" + sTimestamp + "]%c" + sTitle + "%c" + sMsg;
+			console.log(sLogInfo, oConfig.timestampStyle, oConfig.titleStyle, oConfig.msgStyle);
+		}
+	}
+	log = AUI.debug.log;
+	
 	//Throttle
 	AUI.throttle = function(fFunction, nThreshhold, oScope){
 		nThreshhold || (nThreshhold = 250);
@@ -73,7 +138,40 @@
 	
 		}
 	}
-	
+
+	//Validation
+	AUI.Validate = AUI.Validate || {};
+	AUI.Validate.isElementExist = function(oDomElement){
+		return typeof(oDomElement) === "object" && oDomElement !== null;
+	}
+	/**
+	 * @description Get upload file size.
+	 * @public
+	 * @param oInput {Object} HTML DOM input fileupload element object
+	 * @returns {Number} File size(byte unite)
+	 */	
+	AUI.Validate.getFileSize = function(oInputElement){
+		if(oInputElement){
+			//log(oInputElement);
+			if("files" in oInputElement){
+				if(oInputElement.files === null || oInputElement.files.length === 0){
+					return 0;
+				}else{
+					var oFiles = oInputElement.files;
+					var nLength = oFiles.length;
+					var nTotalSize = 0;
+					for(var i=0; i<nLength; i++){
+						nTotalSize += oFiles[i].size;
+					}
+					return nTotalSize;
+					//log('Files total size:' + nTotalSize);
+				}
+			}
+		}
+	}
+
+
+
 	//Local Storage
 	AUI.Storage = (function() {
 		var fLocalStorageSupported = function() {
@@ -159,46 +257,5 @@
 		sResult = nYear + sDateSeparateSymbol + nMonth + sDateSeparateSymbol + nDay + " " + nHour + sTimeSeparateSymbol + nMinutes + sTimeSeparateSymbol + nSeconds;
 		return sResult;
 	}
-
-	//Debug Tools
-	AUI.debug = AUI.debug || {};
-	/**
-	 * @param sTitle {String} Print debug Title
-	 * @param sMsg {String} Print debug information
-	 * @return undefined
-	 **/
-	AUI.debug.log = function(sTitle, sMsg) {
-		if (win.console) {
-			if (!arguments.length) {
-				console.log(AUI.VERSION);
-				return;
-			}
-			var sMsg;
-			var sTitle;
-			if (arguments.length == 1) {
-				sTitle = "";
-				sMsg = arguments[0];
-			}
-			if (arguments.length == 2) {
-				sTitle = "[" + arguments[0] + "]";
-				sMsg = arguments[1];
-			}
-			var oConfig = {
-				timestampStyle: "color: #09a1d3",
-				titleStyle: "color: #e66102",
-				msgStyle: "color: #3e4c59"
-			}
-			var sTimestamp = AUI.time.now();
-			var sLogInfo;
-			if (typeof sMsg == "object") {
-				var sLogInfoTimeStamp;
-				sLogInfoTimeStamp = "%c[" + sTimestamp + "]%c";
-				console.log(sLogInfoTimeStamp + sTitle + "\u2193", oConfig.timestampStyle, oConfig.titleStyle);
-				console.dir(sMsg);
-				return;
-			}
-			sLogInfo = "%c[" + sTimestamp + "]%c" + sTitle + "%c" + sMsg;
-			console.log(sLogInfo, oConfig.timestampStyle, oConfig.titleStyle, oConfig.msgStyle);
-		}
-	}
+	
 })(window);

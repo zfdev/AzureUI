@@ -359,14 +359,10 @@ th {
 /**
  * Remove ul default padding and margin.
  */
-ul {
-  margin: 0;
-  padding: 0;
-}
 @font-face {
   font-family: "azure-icon";
-  src: url('../fonts//azure-icon.eot?i1iez0');
-  src: url('../fonts//azure-icon.eot?#iefixi1iez0') format('embedded-opentype'), url('../fonts//azure-icon.ttf?i1iez0') format('truetype'), url('../fonts//azure-icon.woff?i1iez0') format('woff'), url('../fonts//azure-icon.svg?i1iez0#azure-icon') format('svg');
+  src: url('../fonts/azure-icon.eot?i1iez0');
+  src: url('../fonts/azure-icon.eot?#iefixi1iez0') format('embedded-opentype'), url('../fonts/azure-icon.ttf?i1iez0') format('truetype'), url('../fonts/azure-icon.woff?i1iez0') format('woff'), url('../fonts/azure-icon.svg?i1iez0#azure-icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -653,5 +649,8 @@ ul {
   .hidden-lg {
     display: none !important;
   }
+}
+.hidden-all {
+  display: none !important;
 }
 /*# sourceMappingURL=azureui.css.map */
