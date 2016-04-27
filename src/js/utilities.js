@@ -1,83 +1,25 @@
-/*! Azure UI v0.0.1*/
 ;
-(function(win) {
+(function(AUI) {
 	"use strict";
-	win.AUI = win.AUI || {};
-	AUI.VERSION = "0.0.1";
-	AUI.Class = function() {
-		var _mix = function(r, s){
-			for(var p in s){
-				if(s.hasOwnProperty(p)){
-					r[p] = s[p]
-				}
-			}
-		}
-		var _extend = function(){
-			var prototype = new this();
-			var SubClass = function(){
-				this.init.apply(this, arguments);
-			}
-			SubClass.prototype = prototype;
-			SubClass.prototype.constructor = SubClass;
-			return SubClass;
-		}
-		var Class = new Function();
-		Class.extend = _extend;
-		return Class;
-	}
-	AUI.base = function(){
-						
-	}
-	AUI.Template = (function() {
-		var cache = {};
-		var tmpl = function(str, data) {
-			// Figure out if we're getting a template, or if we need to
-			// load the template - and be sure to cache the result.
-			var fn = !/\W/.test(str) ?
-				cache[str] = cache[str] ||
-				tmpl(document.getElementById(str).innerHTML) :
-
-				// Generate a reusable function that will serve as a template
-				// generator (and which will be cached).
-				new Function("obj",
-					"var p=[],print=function(){p.push.apply(p,arguments);};" +
-
-					// Introduce the data as local variables using with(){}
-					"with(obj){p.push('" +
-
-					// Convert the template into pure JavaScript
-					str
-					.replace(/[\r\t\n]/g, " ")
-					.split("<%").join("\t")
-					.replace(/((^|%>)[^\t]*)'/g, "$1\r")
-					.replace(/\t=(.*?)%>/g, "',$1,'")
-					.split("\t").join("');")
-					.split("%>").join("p.push('")
-					.split("\r").join("\\'") + "');}return p.join('');");
-
-			// Provide some basic currying to the user
-			return data ? fn(data) : fn;
-		};
-		return tmpl;
-	})();
-
-})(window);
-;
-(function(win) {
-	"use strict";
-	var AUI = win.AUI;
-	var log;
-	//Debug Tools
-	AUI.debug = AUI.debug || {};
 	/**
-	 * @exports AUI/debug
-	 * @example
-	 * AUI.debug.log();
-	 * @param sTitle {String} Print debug Title
-	 * @param sMsg {String} Print debug information
-	 * @returns undefined
+	 * @namespace
+	 * @author Jason Zhang <v-zhlong@microsoft.com>
 	 */
-	AUI.debug.log = function(sTitle, sMsg) {
+	AUI.Util = AUI.Util || {};
+
+	/**
+	 * Debug Tools 
+	 * @param {String} [sTitle] Print debug title
+	 * @param {String|Object} sMsg Print debug information
+	 * @example
+	 * //Output a debug information.
+	 * AUI.Util.log(sMsg);  
+	 * 
+	 * //Output a debug information with title.
+	 * AUI.Util.log(sTitle,sMsg); 
+	 * @returns {undefined}
+	 */
+	AUI.Util.log = function(sTitle, sMsg) {
 		if (win.console) {
 			if (!arguments.length) {
 				console.log(AUI.VERSION);
@@ -111,56 +53,67 @@
 			console.log(sLogInfo, oConfig.timestampStyle, oConfig.titleStyle, oConfig.msgStyle);
 		}
 	}
-	log = AUI.debug.log;
-	
-	//Throttle
-	AUI.throttle = function(fFunction, nThreshhold, oScope){
+
+})(AUI);
+
+(function(win) {
+
+	/**
+	 * Throttle function calls
+	 * @param {Function} fFunction 
+	 * @param {Number} nThreshhold 
+	 * @example
+	 * //Throttle function calls
+	 * AUI.Util.throttle(fFunction,nThreshhold); 
+	 * @returns {undefined}
+	 */
+
+	AUI.Util.throttle = function(fFunction, nThreshhold, oScope) {
 		nThreshhold || (nThreshhold = 250);
 		var nLast,
 			oDeferTimer;
-		return function(){
+		return function() {
 			var oContext,
 				nNow,
 				oArgs;
 			oContext = oScope || this;
 			nNow = +new Date();
 			oArgs = arguments;
-			if(nLast && (nNow < nLast + nThreshhold)){
+			if (nLast && (nNow < nLast + nThreshhold)) {
 				clearTimeout(oDeferTimer);
-				oDeferTimer = setTimeout(function(){
+				oDeferTimer = setTimeout(function() {
 					nLast = nNow;
-					fFunction.apply(oScope, oArgs);	
-				}, nThreshhold);					
-			}else{
+					fFunction.apply(oScope, oArgs);
+				}, nThreshhold);
+			} else {
 				nLast = nNow;
 				fFunction.apply(oScope, oArgs);
 			}
-	
+
 		}
 	}
 
 	//Validation
-	AUI.Validate = AUI.Validate || {};
-	AUI.Validate.isElementExist = function(oDomElement){
-		return typeof(oDomElement) === "object" && oDomElement !== null;
-	}
+	AUI.Util.isElementExist = function(oDomElement) {
+			return typeof(oDomElement) === "object" && oDomElement !== null;
+		}
+	
 	/**
 	 * @description Get upload file size.
-	 * @public
-	 * @param oInput {Object} HTML DOM input fileupload element object
+	 * @param {Object}  oInput - HTML DOM input fileupload element object
 	 * @returns {Number} File size(byte unite)
-	 */	
-	AUI.Validate.getFileSize = function(oInputElement){
-		if(oInputElement){
+	 */
+	AUI.Util.getFileSize = function(oInputElement) {
+		if (oInputElement) {
 			//log(oInputElement);
-			if("files" in oInputElement){
-				if(oInputElement.files === null || oInputElement.files.length === 0){
+			if ("files" in oInputElement) {
+				if (oInputElement.files === null || oInputElement.files.length === 0) {
 					return 0;
-				}else{
+				} else {
 					var oFiles = oInputElement.files;
 					var nLength = oFiles.length;
 					var nTotalSize = 0;
-					for(var i=0; i<nLength; i++){
+					for (var i = 0; i < nLength; i++) {
 						nTotalSize += oFiles[i].size;
 					}
 					return nTotalSize;
@@ -169,8 +122,6 @@
 			}
 		}
 	}
-
-
 
 	//Local Storage
 	AUI.Storage = (function() {
@@ -189,13 +140,13 @@
 			return JSON.stringify(oData);
 		}
 		var fDeserialize = function(sData) {
-			return JSON.parse(sData);
-		}
-		/**
-		 * @param sKey {String} save index to local 
-		 * @param oValue {Object} save data to local 
-		 * @return oValue {Object} data
-		 */
+				return JSON.parse(sData);
+			}
+			/**
+			 * @param sKey {String} save index to local 
+			 * @param oValue {Object} save data to local 
+			 * @return oValue {Object} data
+			 */
 		var fSet = function(sKey, oValue) {
 			if (oValue == undefined) {
 				return fRemove(sKey);
@@ -214,8 +165,8 @@
 		}
 		var fGetAll = function() {
 			var oAllData = {};
-			fForEach(function(sIndex, oData){
-				oAllData[sIndex] = fGet(sIndex);		
+			fForEach(function(sIndex, oData) {
+				oAllData[sIndex] = fGet(sIndex);
 			});
 			return oAllData;
 		}
@@ -234,10 +185,10 @@
 			forEach: fForEach
 		}
 	})();
-	
+
 	//Time and Date
-	AUI.time = AUI.time || {};
-	AUI.time.now = function() {
+	AUI.Util.time = AUI.Util.time || {};
+	AUI.Util.time.now = function() {
 		var oTime = new Date();
 		var sResult = "";
 		var sDateSeparateSymbol = "-";
@@ -257,5 +208,41 @@
 		sResult = nYear + sDateSeparateSymbol + nMonth + sDateSeparateSymbol + nDay + " " + nHour + sTimeSeparateSymbol + nMinutes + sTimeSeparateSymbol + nSeconds;
 		return sResult;
 	}
-	
+
 })(window);
+
+;
+(function(AUI) {
+	AUI.Util.Template = (function() {
+		var cache = {};
+		var tmpl = function(str, data) {
+			// Figure out if we're getting a template, or if we need to
+			// load the template - and be sure to cache the result.
+			var fn = !/\W/.test(str) ?
+				cache[str] = cache[str] ||
+				tmpl(document.getElementById(str).innerHTML) :
+
+				// Generate a reusable function that will serve as a template
+				// generator (and which will be cached).
+				new Function("obj",
+					"var p=[],print=function(){p.push.apply(p,arguments);};" +
+
+					// Introduce the data as local variables using with(){}
+					"with(obj){p.push('" +
+
+					// Convert the template into pure JavaScript
+					str
+					.replace(/[\r\t\n]/g, " ")
+					.split("<%").join("\t")
+					.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+					.replace(/\t=(.*?)%>/g, "',$1,'")
+					.split("\t").join("');")
+					.split("%>").join("p.push('")
+					.split("\r").join("\\'") + "');}return p.join('');");
+
+			// Provide some basic currying to the user
+			return data ? fn(data) : fn;
+		};
+		return tmpl;
+	})();
+})(AUI);

@@ -1,0 +1,21 @@
+{
+  "name": "AzureUI",
+  "version": "0.0.1",
+  "description": "Azure UI Javascript Library",
+  "main": "gulpfile.js",
+  "author": "Jason Zhang <v-zhlong@microsoft.com>",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "http://vstfrd.redmond.corp.microsoft.com:8080/Azure/One/_git/AzureUX-Mcmktg"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-jsdoc": "^0.1.5",
+    "gulp-less": "^3.0.5",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2"
+  }
+}

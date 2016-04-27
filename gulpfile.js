@@ -1,18 +1,22 @@
-var gulp = require('gulp');
-var concat = require('gulp-concat');
+var gulp = require('gulp'),
+	less = require('gulp-less'),
+	livereload = require('gulp-livereload'),
+	minifyCss = require('gulp-minify-css'),
+	rename = require("gulp-rename"),
+	concat = require('gulp-concat'),
 //var minify = require('gulp-minify');
-var uglify = require('gulp-uglify');
-var zip = require('gulp-zip');
-var minifyCss = require('gulp-minify-css');
-var rename = require("gulp-rename");
-var del = require('del');
-//var LineByLineReader = require('line-by-line');
-var readline = require('linebyline');
-var file = require('gulp-file');
-var jsdoc = require('gulp-jsdoc');
+	uglify = require('gulp-uglify'),
+	zip = require('gulp-zip'),
+	del = require('del'),
+	readline = require('linebyline'),
+	file = require('gulp-file'),
+	jsdoc = require('gulp-jsdoc');
+	
 
 //Gulp config
 var config = {
+	lessUrl:'./src/less/azureui.less',
+	distCSSUrl: './dist/css',
 	compressJsFileName: 'azureui.js',
 	webfont: {
 		soureDirectory: './fonts/icomoon/azure-icon/fonts/**',
@@ -32,22 +36,14 @@ var config = {
 	zipFilename: 'AzureUIWebFonts.zip'
 };
 
-gulp.task('compressJs', function() {
-	return gulp.src('./js/*.js')
-		.pipe(concat(config.compressJsFileName))
-		.pipe(gulp.dest('./dist/js/'))
+//Less Compress
+gulp.task('compressLess', function() {
+  return gulp.src(config.lessUrl)
+    .pipe(less())
+    .pipe(gulp.dest(config.distCSSUrl))
+    .pipe(livereload());
 });
-
-gulp.task('minifyJs', ['compressJs'], function() {
-	return gulp.src(['./dist/js/*.js', '!./dist/js/*.min.js'])
-		.pipe(uglify())
-		.pipe(rename({
-			suffix: '.min'
-		}))
-		.pipe(gulp.dest('./dist/js/'));
-});
-
-gulp.task('minifyCSS', function() {
+gulp.task('minifyCSS', ['compressLess'], function() {
 	return gulp.src(['./dist/css/*.css', '!./dist/css/*.min.css'])
 		.pipe(minifyCss({
 			compatibility: 'ie8'
@@ -57,6 +53,24 @@ gulp.task('minifyCSS', function() {
 		}))
 		.pipe(gulp.dest('./dist/css/'));
 });
+
+//Javascript Compress
+gulp.task('compressJs', function() {
+	return gulp.src('./js/*.js')
+		.pipe(concat(config.compressJsFileName))
+		.pipe(gulp.dest('./dist/js/'))
+});
+gulp.task('minifyJs', ['compressJs'], function() {
+	return gulp.src(['./dist/js/*.js', '!./dist/js/*.min.js'])
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
+		.pipe(gulp.dest('./dist/js/'));
+});
+
+//Clean files
+
 
 //Copy all the font files to the dist directory.
 gulp.task('copyWebfonts', function() {
@@ -103,7 +117,7 @@ gulp.task('compressAllToZipFile', ['minifyJs', 'minifyCSS', 'copyWebfonts', 'upd
 var tpl = {
     path            : "ink-docstrap",
     systemName      : "Azure UI",
-    footer          : "Azure UI API Document",
+    footer          : "Azure UI Javascript Library API Document",
     copyright       : 'Author: <a href="mailto:v-zhlong@microsoft.com">Jason Zhang</a>',
     navType         : "vertical",
     theme           : "cerulean",
@@ -112,10 +126,19 @@ var tpl = {
     collapseSymbols : false,
     inverseNav      : false
   }
+
 //Generate API document
 gulp.task('generateAPIDocument', ['compressAllToZipFile'], function(){
-	gulp.src("./dist/js/*.js")
+	gulp.src(['./dist/js/*.js', 'README.md'])
   		.pipe(jsdoc('./docs/documentation-output', tpl))
 });
 
-gulp.task('default', ['generateAPIDocument']);
+gulp.task('default', ['minifyCSS']);
+
+//Watcher
+//Less Watcher
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch('./src/less/*.less', ['less']);
+  gulp.watch(['./test/**']).on('change', livereload.changed);
+});
