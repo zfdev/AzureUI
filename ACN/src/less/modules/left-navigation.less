@@ -1,0 +1,88 @@
+.left-navigation{
+    background-color: @ui-section-gray-light;
+    h3{
+        margin: 0;     
+        padding-top: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 10px;
+        color: @blue-gray-light;
+        font-size: @base-font-size;
+        font-weight: normal;        
+    }
+    >ul{
+        margin: 0;
+        padding: 0;
+        padding-bottom: 20px;  
+         
+        >li{
+           list-style: none;
+           >a{
+               position: relative;
+               display: block;
+                font-size: @base-font-size;
+                color: @blue-gray-dark; 
+                padding-left: 15px;
+                padding-right: 15px;                
+//              padding-top:8px;
+//              padding-bottom: 8px;  
+                .nav-title{
+                    display: block;
+                    width: 90%;
+                    height: 35px;
+                    line-height: 35px; 
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;  
+                }
+                &:hover{
+                  background-color: @ui-list-bg-hover;
+                }
+                &:active{
+                  background-color: @ui-list-bg-hover;
+                } 
+                .icon{
+                    display: block;
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    font-size: @web-icon-small;
+                    transform: rotateZ(0);
+                }
+                &.active{
+                 .icon{
+                    transform: rotateZ(180deg);
+                 }    
+                }
+           }
+           >ul{
+                padding: 0;
+                >li{
+                   list-style: none;
+                   a{
+                    display: block;
+                    padding-left: 15px;
+                    padding-right: 15px; 
+                    padding-top:5px;
+                    padding-bottom: 5px; 
+                    color: @ui-section-blue;
+                    font-size: @base-font-size;
+                    line-height: 20px;  
+                    &:hover{
+                        background-color: @ui-list-bg-hover;
+                    }
+                    &:active{
+                      background-color: @ui-list-bg-hover;
+                    }
+                   }
+                  &.active{
+                      a{
+                        color: @white;
+                        background-color: @ui-section-blue;                          
+                      }
+                    }                                      
+                }    
+           }
+        }
+    }
+}

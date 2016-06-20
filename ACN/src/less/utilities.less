@@ -1,0 +1,114 @@
+//#Utilities
+
+
+//##clear browser default link style
+.clear-link-style(){
+    &:link{
+        text-decoration: none;
+    }
+    &:visited{
+        text-decoration: none;
+    }
+    &:hover{
+        text-decoration: none;
+    }
+    &:active{
+        text-decoration: none;
+    }
+}
+
+
+
+//##Remove ul default padding and margin.
+
+.reset-ul-default-style(){
+    ul{
+        margin: 0;
+        padding: 0;
+    }    
+}
+
+
+//##Remove the touch highlight 
+.remove-tab-highlight(){
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+//##Remove the touch delay 
+.remove-pointer-event(){
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;    
+}
+
+//##Transation
+.transiton(@transition){
+  -webkit-transition: @transition;
+       -o-transition: @transition;
+          transition: @transition;    
+}
+
+//##Rotate
+.rotate(@degrees) {
+  -webkit-transform: rotate(@degrees);
+      -ms-transform: rotate(@degrees); // IE9 only
+       -o-transform: rotate(@degrees);
+          transform: rotate(@degrees);
+}
+
+//##Animation 
+.do-animation(@property: all, @duration: .3s, @time-function: ease-in-out){
+   .transiton(@property @duration @time-function);
+}
+
+//##Retina image
+.img-retina(@file-1x; @file-2x; @width-1x; @height-1x) {
+  background-image: url("@{file-1x}");
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: url("@{file-2x}");
+    background-size: @width-1x @height-1x;
+  }
+}
+
+// Placeholder text
+.placeholder(@color: @input-color-placeholder) {
+  // Firefox
+  &::-moz-placeholder {
+    color: @color;
+    opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+  }
+  &:-ms-input-placeholder { color: @color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: @color; } // Safari and Chrome
+}
+
+//##Media query
+@mobile-devices-screen: ~"only screen and (max-width: @{screen-md-max})";
+@tablet-screen: ~"only screen and (min-width: @{screen-sm})";
+@desktop-screen: ~"only screen and (min-width: @{screen-md})";
+@large-desktop-screen: ~"only screen and (min-width: @{screen-lg})";
+
+@header-logo-breakpoint-query: ~"only screen and (min-width: @{header-breakpoint})";
+
+
+//##Fucking disable responsive
+//.no-responsive{
+//  &.no-scroll{
+//      position: inherit;
+//      overflow: inherit;
+//      height: inherit;
+//  } 
+//  .panel-wrapper{  
+//      //bottom: 0;
+//      position: absolute;
+//      background-color: @header-child-menu-panel-bg-color;
+//      overflow: hidden; 
+//  }     
+//}
+
+

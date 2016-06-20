@@ -1,0 +1,62 @@
+//##Desktop screen
+.content{
+    .single-page{
+        
+        .row{
+            .pure-content{
+                h1{
+                    margin-top: 20px;
+                }
+                .documentation-bookmark{
+                    h3{
+                        margin-top: 0;
+                        color: @blue-gray-light;
+                        font-size: @base-font-size;
+                        font-weight: normal;                       
+                    }
+                    ul{
+                        padding: 0;
+                        padding-bottom: 15px; 
+                        li{
+                            padding: 0;
+                            padding-left: 15px;
+                            //list-style: disc;
+                            a{
+                                &:hover{
+                                    background-color: transparent;
+                                    border-bottom: none;
+                                }
+                                &:active{
+                                    background-color: transparent;
+                                    border-bottom: none;
+                                }
+                            }
+                        }
+                    }
+                }
+            }            
+        }
+    }
+}
+
+@media @desktop-screen{
+    .content{
+        .single-page{
+            margin-top: 0;
+            .row{
+                .pure-content{
+                    h1{
+                        margin-top: 0;
+                    }
+                } 
+                .documentation-bookmark{
+                    margin-top: 74px;
+                    &.fixed-top{
+                        margin-top: 0;
+                    }
+                }                
+            }       
+        }
+
+    }           
+}

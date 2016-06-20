@@ -7,4 +7,10 @@ How to use
     ```
     npm install
     ```
-    If you don't have npm, you can install a <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a> included a npm.
+    If you don‘t have npm, you can install a <a href="https://nodejs.org/en/download/" target="_blank">Node.js</a> included a npm.
+
+Trouble shooting
+---
+
+Change log
+---

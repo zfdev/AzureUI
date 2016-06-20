@@ -1,0 +1,44 @@
+//##Body Scroll
+body{
+    overflow-x: hidden;
+}
+@media @mobile-devices-screen{
+    .no-scroll{
+        position: fixed;
+        overflow: hidden;
+        height: 100%;
+    }    
+}
+
+a{
+    .clear-link-style;
+}
+
+//#Text input
+.text-input{
+    padding: 0;
+}
+
+//#Fixed top
+@media @desktop-screen{
+    .fixed-top{
+        position: fixed;
+        overflow-x: hidden;
+        overflow-y: auto;
+    } 
+    .fixed-bottom{
+        position: absolute;       
+    }     
+}
+
+//#$Auto Scroll
+@media @mobile-devices-screen{
+    .auto-scroll{
+        overflow-x: hidden!important;
+        overflow-y: auto!important;
+        //-webkit-overflow-scrolling: touch;         
+//      &.scroll-y{
+//
+//      }
+    }
+}

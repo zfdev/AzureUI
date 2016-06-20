@@ -1,0 +1,24 @@
+//#Content
+.content{
+    margin-top: @header-height-xs;
+    
+}
+
+@media @header-logo-breakpoint-query{
+    .content{
+        margin-top: @header-height-sm;
+    }
+}
+
+//##Tablet screen
+@media @tablet-screen{
+    .content{
+        margin-top: @header-height-sm;
+    }            
+}
+//##Desktop screen
+@media @desktop-screen{
+    .content{
+        margin-top: 0;
+    }             
+}

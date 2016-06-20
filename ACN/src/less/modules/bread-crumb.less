@@ -1,0 +1,30 @@
+.bread-crumb{
+    height: 60px;
+    
+    ul{
+        margin: 0;
+        padding: 0;
+        li{
+            list-style: none;
+            float: left;
+            line-height: 59px;
+            span{
+                margin-right: 10px;
+                color: @ui-section-blue;
+                font-size: @base-font-size;
+            }
+            a{
+                margin-right: 10px;
+                color: @ui-section-blue;
+                font-size: @base-font-size;
+                line-height: @base-font-size;
+                &:hover{
+                    border-bottom: 1px solid @ui-section-blue;
+                }
+                &:active{
+                    border-bottom: 1px solid @ui-section-blue;
+                }
+            }
+        }
+    }
+}

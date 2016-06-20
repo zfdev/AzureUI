@@ -1,0 +1,48 @@
+//#Bookmark
+.book-mark{
+    background-color: @ui-section-gray-light;
+    >h3{
+        margin: 0;     
+        padding-top: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        color: @blue-gray-light;
+        font-size: @base-font-size;
+        font-weight: normal;
+    }  
+    ul{   
+        padding: 0;
+        padding-bottom: 15px;  
+       li{
+            padding-left: 15px;
+            padding-right: 15px;            
+            list-style: none;
+          &:hover{
+              background-color: @ui-list-bg-hover;
+          }
+          &:active{
+              background-color: @ui-list-bg-hover;
+          }  
+          a{
+              display: block;
+              padding-top: 6px;
+              padding-bottom: 6px;
+              line-height: 18px;
+              font-size: @font-size-small;
+              color: @blue-gray-dark;
+              
+          } 
+          &.active{
+              border-left: 4px solid @ui-section-blue;
+              padding-left: 11px;
+              a{
+                  font-weight: bold;
+                  
+              }
+          }
+       } 
+    }
+}
+
+
+

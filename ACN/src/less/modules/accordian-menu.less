@@ -1,0 +1,50 @@
+//#$Accordian Menu
+.accordian-menu{
+    .remove-tab-highlight;
+    .menu-title{
+        .remove-pointer-event;
+        &:hover{
+            cursor: pointer;
+        }
+        .icon-arrow-top{
+            display: inline-block;
+            float: right;
+            .do-animation;
+            //transform: rotateZ(180deg); 
+        }
+        &.expand{
+           .icon-arrow-top{
+                transform: rotateZ(180deg);
+           } 
+        }       
+    }
+    .menu-child{
+        //.do-animation(max-height, .5s);
+        
+        //max-height: @auto-height-max;
+        display: none;
+//      overflow: hidden;
+//      &.show-xs{
+//          max-height: @auto-height-max;
+//      }
+//      &.show-sm{
+//          max-height: @auto-height-max;
+//      } 
+//      &.show-md{
+//          max-height: @auto-height-max;
+//      }    
+    }
+}
+
+@media @mobile-devices-screen{
+    .accordian-menu{
+        .menu-child{
+//          &.show-xs{
+//              max-height: @auto-height-max;
+//          }
+//          &.show-sm{
+//              max-height: @auto-height-max;
+//          }  
+        }        
+    }  
+}

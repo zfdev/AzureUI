@@ -1,0 +1,63 @@
+//#$Panel
+.panel-wrapper{  
+    //bottom: 0;
+    position: absolute;
+    background-color: @header-child-menu-panel-bg-color;
+    overflow: hidden;
+    .panel-title{
+        position: relative;
+//      top: 0;
+        height: 65px;
+        color: @ice-blue;
+        font-weight: normal;
+        font-size: @font-size-large;
+        background-color: @blue-gray-dark;
+        text-align: center; 
+        h3{
+            margin-top: 0;
+            margin-bottom: 0;
+            line-height: 65px;
+            font-size: inherit;
+            font-weight: inherit;
+        }
+        a{
+            position: absolute;
+            top: 18px;
+            right: 20px;
+            display: block;
+            height: 24px;
+            width: 24px;
+            .clear-link-style;
+            .remove-pointer-event;
+            color: @ice-blue;
+            .icon-close{
+                font-size: @web-icon-normal;
+            }
+            &:hover{
+                color: @white;
+            }
+            &:active{
+                color: @ice-blue-opacity60;
+            }                            
+        }           
+    }
+    .panel-content{
+        width: 100%;
+//      position: absolute;
+//      top: 65px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        //background-color: @header-child-menu-panel-bg-color;
+    }
+}
+@media @mobile-devices-screen{
+    .panel-wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;        
+        .panel-title{
+            width: 100%;
+        }  
+    }  
+}

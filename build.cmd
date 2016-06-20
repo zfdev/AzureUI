@@ -1,2 +1,2 @@
-gulp
+cmd
 pause

@@ -3,29 +3,35 @@
  * @global
  * @author Jason Zhang <v-zhlong@microsoft.com>
  */
-var AUI = AUI || {};
+var AX = AX || {};
 
-;(function(AUI) {
-	"use strict";
+(function(AX) {
+	'use strict';
 
 	/**
-	 * @name AUI.VERSION
+	 * @name AX.VERSION
 	 * @description Azure UI javascript library version
 	 */
-	AUI.VERSION = "0.0.1";
+	AX.VERSION = "0.0.1";
 
 	/**
-	 * @name AUI.debug
+	 * @name AX.debug
 	 * @description Debug mode switch
 	 */
-	AUI.debug = ture;
+	AX.debug = false;
 
 	/**
-	 * @method AUI#Class
+	 * @method AX.Class
 	 * @example
+	 * AX.Class.extend({
+	 * 	init: function(){
+	 * 	
+	 * }
+	 * });
 	 * @return {Function}
 	 */
-	AUI.Class = function() {
+
+	AX.Class = (function() {
 		
 		//Mix custom property
 		var _mix = function(targetObject, sourceObject) {
@@ -63,5 +69,51 @@ var AUI = AUI || {};
 		var Class = new Function();
 		Class.extend = _extend;
 		return Class;
+	})();
+	
+	//Base Class
+	AX.Base = AX.Class.extend({
+		init: function(oConfig){
+			this._config = oConfig;
+			this.bind();
+			this.render();				
+		},
+		get: function(sKey){
+			return this._config[sKey];	
+		},
+		set: function(sKey, oValue){			
+			this._config[sKey] = oValue;
+		},
+		bind: function(){
+				
+		},
+		render: function(){
+			
+		},
+		destory: function(){
+			
+		}
+	});
+
+//	AX.Device = AX.Class.extend({
+//		init:　function(){
+//			
+//		},
+//		device: {
+//			bIsMobileMode: ,
+//			bIsTabletMode: ,
+//			bIsDesktopMode 
+//		}
+//	});
+	
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		define(function() {
+			return AX;
+		});
+	} else if (typeof module !== 'undefined' && module.exports) {
+		module.exports = AX;
+	} else {
+		window.AX = AX;
 	}
-})(AUI);
+	
+})(AX);
